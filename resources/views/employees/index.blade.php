@@ -18,7 +18,7 @@
     <tr>
         <td>{{ $employee->first_name }}</td>
         <td>{{ $employee->last_name }}</td>
-        <td>{{ $employee->company->name }}</td>
+        <td>{{ isset($employee->company) ? $employee->company->name : 'n/a'}}</td>
         <td>{{ $employee->email }}</td>
         <td>{{ $employee->phone }}</td>
         <td style="display: inline-flex">

@@ -54,7 +54,9 @@ class EmployeeController extends Controller
         $employee->last_name = $request->last_name;
         $employee->email = $request->email;
         $employee->phone = $request->phone;
-        $employee->company_id = $request->company_id;
+        if ($request->filled('company_id')) {
+            $employee->company_id = $request->company_id;
+        }
         $employee->save();
 
         return redirect()->route('employees.index')->with('status', 'Employee added with success!');
@@ -107,7 +109,11 @@ class EmployeeController extends Controller
         $employee->last_name = $request->last_name;
         $employee->email = $request->email;
         $employee->phone = $request->phone;
-        $employee->company_id = $request->company_id;
+        if ($request->filled('company_id')) {
+            $employee->company_id = $request->company_id;
+        } else {
+            $employee->company_id = null;
+        }
         $employee->save();
 
         return redirect()->route('employees.index')->with('status', 'Employee updated with success!');

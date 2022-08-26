@@ -31,7 +31,8 @@
     <x-adminlte-select name="company_id">
         <option selected value="">Choose company</option>
         @foreach ($listedCompanies as $company)
-        <option value="{{ $company->id }}" {{ (isset($employee) && $company->id == $employee->company->id) ? 'selected':
+        <option value="{{ $company->id }}" {{ (isset($employee) && isset($employee->company) && $company->id ==
+            $employee->company->id) ? 'selected':
             ''}}>{{
             $company->name }}</option>
         @endforeach
