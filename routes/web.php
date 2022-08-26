@@ -16,6 +16,10 @@ use App\Http\Controllers\EmployeeController;
 |
 */
 
+Route::get('/', function () {
+    return redirect()->route('dashboard');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
