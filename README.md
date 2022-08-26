@@ -4,5 +4,5 @@ This is a basic Laravel 9.x project which develops a basic mini CRM to manage co
 
 ### Credentials for testing
 You can log in as administrator with the following credentials:
-> email: admin@admin.com
-> password: password
+email: admin@admin.com
+password: password
