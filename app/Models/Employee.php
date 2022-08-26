@@ -12,7 +12,7 @@ class Employee extends Model
     /**
      * Get the company of the employee.
      */
-    public function post()
+    public function company()
     {
         return $this->belongsTo(Company::class);
     }

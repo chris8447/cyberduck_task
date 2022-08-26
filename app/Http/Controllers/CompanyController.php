@@ -18,7 +18,7 @@ class CompanyController extends Controller
         //
         $companies = DB::table('companies')->simplePaginate(10);
 
-        return view('companies.show')->with(['companies' => $companies]);
+        return view('companies.index')->with(['companies' => $companies]);
     }
 
     /**

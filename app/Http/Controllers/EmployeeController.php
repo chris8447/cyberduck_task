@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
@@ -15,7 +16,8 @@ class EmployeeController extends Controller
     public function index()
     {
         //
-        return view('employees.show');
+        $employees = Employee::with('company')->simplePaginate(10);
+        return view('employees.index', ['employees' => $employees]);
     }
 
     /**
@@ -26,6 +28,8 @@ class EmployeeController extends Controller
     public function create()
     {
         //
+        $listedCompanies = DB::table('companies')->get();
+        return view('employees.create', ['listedCompanies' => $listedCompanies]);
     }
 
     /**
@@ -37,6 +41,23 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'nullable|email',
+            'phone' => 'nullable|string',
+            'company_id' => 'nullable|numeric|gte:1'
+        ]);
+
+        $employee = new Employee();
+        $employee->first_name = $request->first_name;
+        $employee->last_name = $request->last_name;
+        $employee->email = $request->email;
+        $employee->phone = $request->phone;
+        $employee->company_id = $request->company_id;
+        $employee->save();
+
+        return redirect()->route('employees.index')->with('status', 'Employee added with success!');
     }
 
     /**
@@ -48,6 +69,7 @@ class EmployeeController extends Controller
     public function show(Employee $employee)
     {
         //
+
     }
 
     /**
@@ -59,6 +81,8 @@ class EmployeeController extends Controller
     public function edit(Employee $employee)
     {
         //
+        $listedCompanies = DB::table('companies')->get();
+        return view('employees.create', ['employee' => $employee, 'listedCompanies' => $listedCompanies]);
     }
 
     /**
@@ -71,6 +95,22 @@ class EmployeeController extends Controller
     public function update(Request $request, Employee $employee)
     {
         //
+        $request->validate([
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'nullable|email',
+            'phone' => 'nullable|string',
+            'company_id' => 'nullable|numeric|gte:1'
+        ]);
+
+        $employee->first_name = $request->first_name;
+        $employee->last_name = $request->last_name;
+        $employee->email = $request->email;
+        $employee->phone = $request->phone;
+        $employee->company_id = $request->company_id;
+        $employee->save();
+
+        return redirect()->route('employees.index')->with('status', 'Employee updated with success!');
     }
 
     /**
@@ -82,5 +122,8 @@ class EmployeeController extends Controller
     public function destroy(Employee $employee)
     {
         //
+        $employee->delete();
+
+        return redirect()->route('employees.index')->with('status', 'Employee removed from CRM.');
     }
 }
