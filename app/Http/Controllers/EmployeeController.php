@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -55,7 +56,8 @@ class EmployeeController extends Controller
         $employee->email = $request->email;
         $employee->phone = $request->phone;
         if ($request->filled('company_id')) {
-            $employee->company_id = $request->company_id;
+            $company = Company::find($request->company_id);
+            $employee->company()->associate($company);
         }
         $employee->save();
 
@@ -110,7 +112,8 @@ class EmployeeController extends Controller
         $employee->email = $request->email;
         $employee->phone = $request->phone;
         if ($request->filled('company_id')) {
-            $employee->company_id = $request->company_id;
+            $company = Company::find($request->company_id);
+            $employee->company()->associate($company);
         } else {
             $employee->company_id = null;
         }
